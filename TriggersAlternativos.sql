@@ -4,11 +4,18 @@ IF OBJECT_ID(N'Version01.Promoção_para_TempoExtra') IS NOT NULL
 	DROP TRIGGER Version01.Promoção_para_TempoExtra;
 IF OBJECT_ID(N'Version01.Promoção_para_Desconto') IS NOT NULL
 	DROP TRIGGER Version01.Promoção_para_Desconto;
-IF OBJECT_ID(N'Version01.Check_Dates_Preço') IS NOT NULL
-	DROP TRIGGER Version01.Check_Dates_Preço;
+IF OBJECT_ID(N'Version01.Verificar_Datas_de_Preço') IS NOT NULL
+	DROP TRIGGER Version01.Verificar_Datas_de_Preço;
+
+IF OBJECT_ID(N'Promoção_para_TempoExtra') IS NOT NULL
+	DROP TRIGGER Promoção_para_TempoExtra;
+IF OBJECT_ID(N'Promoção_para_Desconto') IS NOT NULL
+	DROP TRIGGER Promoção_para_Desconto;
+IF OBJECT_ID(N'Verificar_Datas_de_Preço') IS NOT NULL
+	DROP TRIGGER Verificar_Datas_de_Preço;
 
 GO
-CREATE TRIGGER Check_Dates_Preço
+CREATE TRIGGER Verificar_Datas_de_Preço
 ON dbo.Preço
 INSTEAD OF
 INSERT, UPDATE
@@ -90,9 +97,3 @@ AS
 	INSERT INTO dbo.TempoExtra (NumeroIdentificadorPromoção, FracçãoExtra, TipoDuração) VALUES (@numeroId,@fracçãoExtra,@tipoDuração);
 	RETURN
 GO
-
-
-
-/*DROP TRIGGER Promoção_para_TempoExtra;
-DROP TRIGGER Promoção_para_Desconto;
-DROP TRIGGER Check_Dates_Preço;*/

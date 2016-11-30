@@ -29,14 +29,20 @@ IF DB_ID ('Base_Dados_SI2_1617SI_23') IS NOT NULL
 	IF OBJECT_ID(N'Inserir_TempoExtra') IS NOT NULL
 		DROP PROC Inserir_TempoExtra;
 
-	IF OBJECT_ID(N'Promoção_para_TempoExtra') IS NOT NULL
+	IF OBJECT_ID(N'Version01.Promoção_para_TempoExtra') IS NOT NULL
 		DROP TRIGGER Version01.Promoção_para_TempoExtra;
-	IF OBJECT_ID(N'Promoção_para_Desconto') IS NOT NULL
+	IF OBJECT_ID(N'Version01.Promoção_para_Desconto') IS NOT NULL
 		DROP TRIGGER Version01.Promoção_para_Desconto;
-	IF OBJECT_ID(N'Check_Dates_Preço') IS NOT NULL
-		DROP TRIGGER Version01.Check_Dates_Preço;
-	IF OBJECT_ID(N'Insert_Aluguer') IS NOT NULL
-		DROP TRIGGER Insert_Aluguer;
+	IF OBJECT_ID(N'Version01.Verificar_Datas_de_Preço') IS NOT NULL
+		DROP TRIGGER Version01.Verificar_Datas_de_Preço;
+	IF OBJECT_ID(N'dbo.Promoção_para_TempoExtra') IS NOT NULL
+		DROP TRIGGER dbo.Promoção_para_TempoExtra;
+	IF OBJECT_ID(N'dbo.Promoção_para_Desconto') IS NOT NULL
+		DROP TRIGGER dbo.Promoção_para_Desconto;
+	IF OBJECT_ID(N'dbo.Verificar_Datas_de_Preço') IS NOT NULL
+		DROP TRIGGER dbo.Verificar_Datas_de_Preço;
+	IF OBJECT_ID(N'Version01.Adicionar_Aluguer') IS NOT NULL
+		DROP TRIGGER Version01.Adicionar_Aluguer;
 	IF OBJECT_ID(N'Adicionar_Equipamento_Aluguer') IS NOT NULL
 		DROP TRIGGER Adicionar_Equipamento_Aluguer;
 	IF OBJECT_ID(N'Remover_Aluguer') IS NOT NULL
@@ -45,6 +51,10 @@ IF DB_ID ('Base_Dados_SI2_1617SI_23') IS NOT NULL
 		DROP TRIGGER Remover_Cliente;
 	IF OBJECT_ID(N'Remover_Empregado') IS NOT NULL
 		DROP TRIGGER Remover_Empregado;
+	IF OBJECT_ID(N'Alterar_Aluguer') IS NOT NULL
+		DROP TRIGGER Alterar_Aluguer;
+	IF OBJECT_ID(N'Remover_EquipamentoAlugado') IS NOT NULL
+		DROP TRIGGER Remover_EquipamentoAlugado;
 
 	IF OBJECT_ID(N'Version01.Preço') IS NOT NULL
 		DROP TABLE Version01.Preço;

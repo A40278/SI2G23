@@ -1,4 +1,6 @@
 BEGIN TRAN
+	SET NOCOUNT ON
+
 	DECLARE @equipamento1 INT, @equipamento2 INT, @equipamento3 INT, @equipamento4 INT, @equipamento5 INT;    
 	DECLARE @client INT, @empregado INT;
 	DECLARE @aluguer1 INT, @aluguer2 INT, @aluguer3 INT, @aluguer4 INT, @aluguer5 INT;    
@@ -40,41 +42,41 @@ BEGIN TRAN
 
 	--Introduzir os Preços para os Equipamentos--
 	INSERT INTO dbo.Preço (CódigoEquipamento, Inicio, Fim, TipoDuração, Valor) VALUES(@equipamento1, @preçoInicio, @preçoFim,
-'d',20.00)
+'h',20.00)
 
 	INSERT INTO dbo.Preço (CódigoEquipamento, Inicio, Fim, TipoDuração, Valor) VALUES(@equipamento2, @preçoInicio, @preçoFim,
-'d',20.00)
+'h',20.00)
 
 	INSERT INTO dbo.Preço (CódigoEquipamento, Inicio, Fim, TipoDuração, Valor) VALUES(@equipamento3, @preçoInicio, @preçoFim,
-'d',20.00)
+'h',20.00)
 
 	INSERT INTO dbo.Preço (CódigoEquipamento, Inicio, Fim, TipoDuração, Valor) VALUES(@equipamento4, @preçoInicio, @preçoFim,
-'d',20.00)
+'h',20.00)
 
 	INSERT INTO dbo.Preço (CódigoEquipamento, Inicio, Fim, TipoDuração, Valor) VALUES(@equipamento5, @preçoInicio, @preçoFim,
-'d',20.00)
+'h',20.00)
 	--Introduzir os Preços para os Equipamentos--
 
 	DECLARE @inicioA DATETIME, @fimA DATETIME, @inicioB DATETIME, @fimB DATETIME;
-	SET @inicioA =  DATEADD(d,-20,@now);
-	SET @fimA =  DATEADD(d,9,@now);
-	SET @inicioB =  DATEADD(d,1,@fimA);
-	SET @fimB =  DATEADD(d,30,@now);
+	SET @inicioA = DATEADD(hh,2,@now);
+	SET @fimA =  DATEADD(hh,15,@now);
+	SET @inicioB =  DATEADD(hh,16,@now);
+	SET @fimB = DATEADD(hh,25,@now);
 
 	--Introduzir os Alugueres para ocuparem certos Equipamnetos em certos periodos--
-	INSERT INTO dbo.Aluguer(TipoDuração, Inicio, Fim, CódigoCliente, NumeroEmpregado) VALUES ('d',@inicioA,  DATEADD(d,-10,@now),
+	INSERT INTO dbo.Aluguer(TipoDuração, Inicio, Fim, CódigoCliente, NumeroEmpregado) VALUES ('h',@inicioA, DATEADD(hh,5,@now),
 @client, @empregado)
 
-	INSERT INTO dbo.Aluguer(TipoDuração, Inicio, Fim, CódigoCliente, NumeroEmpregado) VALUES ('d',  DATEADD(d,-10,@now),  @now,
+	INSERT INTO dbo.Aluguer(TipoDuração, Inicio, Fim, CódigoCliente, NumeroEmpregado) VALUES ('h',  DATEADD(hh,5,@now),  DATEADD(hh,7,@now),
 @client, @empregado)
 
-	INSERT INTO dbo.Aluguer(TipoDuração, Inicio, Fim, CódigoCliente, NumeroEmpregado) VALUES ('d', @now, @fimA,
+	INSERT INTO dbo.Aluguer(TipoDuração, Inicio, Fim, CódigoCliente, NumeroEmpregado) VALUES ('h', DATEADD(hh,7,@now), @fimA,
 @client, @empregado)
 
-	INSERT INTO dbo.Aluguer(TipoDuração, Inicio, Fim, CódigoCliente, NumeroEmpregado) VALUES ('d', @inicioB, DATEADD(d,20,@now),
+	INSERT INTO dbo.Aluguer(TipoDuração, Inicio, Fim, CódigoCliente, NumeroEmpregado) VALUES ('h', @inicioB , DATEADD(hh,20,@now),
 @client, @empregado)
 
-	INSERT INTO dbo.Aluguer(TipoDuração, Inicio, Fim, CódigoCliente, NumeroEmpregado) VALUES ('d', DATEADD(d,20,@now), @fimB,
+	INSERT INTO dbo.Aluguer(TipoDuração, Inicio, Fim, CódigoCliente, NumeroEmpregado) VALUES ('h', DATEADD(hh,20,@now), @fimB,
 @client, @empregado)
 	
 	SET @aluguer5 = @@IDENTITY

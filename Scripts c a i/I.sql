@@ -44,44 +44,38 @@ BEGIN TRAN
 
 	SELECT * FROM dbo.Preço WHERE CódigoEquipamento = @canoa;
 
-	--Alterar TipoDuração e Valor do Preço--
-	UPDATE dbo.Preço SET TipoDuração = 'mh', Valor = 20.70
-		WHERE CódigoEquipamento = @canoa AND Inicio = '2017-01-01 00:00:00' AND TipoDuração = 'h';
-	--Alterar TipoDuração e Valor do Preço--
-
-	--Erro 4, a alteração do Fim do Preço faz que o segundo Preço acabe no terceiro--
-	PRINT('Erro 4, a alteração do Fim do Preço faz que o segundo Preço acabe no terceiro');
-	UPDATE dbo.Preço SET Fim = '2017-09-30 00:02:00'
+	--Erro 4, a alteração do Fim do Preço faz que o segundo Preço começe no primeiro--
+	PRINT('Erro 4, a alteração do Fim do Preço faz que o segundo Preço começe no primeiro');
+	UPDATE dbo.Preço SET Inicio = '2017-07-01 00:00:10'
 		WHERE CódigoEquipamento = @canoa AND Inicio = '2017-08-01 00:01:00' AND TipoDuração = 'h';
-	PRINT('Erro 4, a alteração do Fim do Preço faz que o segundo Preço acabe no terceiro');
-	--Erro 4, a alteração do Fim do Preço faz que o segundo Preço acabe no terceiro--
+	PRINT('Erro 4, a alteração do Fim do Preço faz que o segundo Preço começe no primeiro');
+	--Erro 4, a alteração do Fim do Preço faz que o segundo Preço começe no primeiro--
+
+	--Erro 5, a alteração do Fim do Preço faz que o segundo Preço acabe no terceiro--
+	PRINT('Erro 5, a alteração do Fim do Preço faz que o segundo Preço acabe no terceiro');
+	UPDATE dbo.Preço SET Fim = '2017-10-01 00:02:00'
+		WHERE CódigoEquipamento = @canoa AND Inicio = '2017-08-01 00:01:00' AND TipoDuração = 'h';
+	PRINT('Erro 5, a alteração do Fim do Preço faz que o segundo Preço acabe no terceiro');
+	--Erro 5, a alteração do Fim do Preço faz que o segundo Preço acabe no terceiro--
+
+	--Altera-se o TipoDuração do primeiro e ultimo elemento--
+	UPDATE dbo.Preço SET TipoDuração = 'mh'
+		WHERE CódigoEquipamento = @canoa AND Inicio = '2017-01-01 00:00:00' AND TipoDuração = 'h';
+
+	UPDATE dbo.Preço SET TipoDuração = 'mh'
+		WHERE CódigoEquipamento = @canoa AND Inicio = '2017-09-30 00:01:00' AND TipoDuração = 'h';
+	--Altera-se o TipoDuração do primeiro e ultimo elemento--
+
+	--Erro 4, a alteração do Fim do Preço faz que o segundo Preço começe no primeiro--
+	UPDATE dbo.Preço SET Inicio = '2017-07-01 00:00:10'
+		WHERE CódigoEquipamento = @canoa AND Inicio = '2017-08-01 00:01:00' AND TipoDuração = 'h';
+	--Erro 4, a alteração do Fim do Preço faz que o segundo Preço começe no primeiro--
+
+	--Erro 5, a alteração do Fim do Preço faz que o segundo Preço acabe no terceiro--
+	UPDATE dbo.Preço SET Fim = '2017-10-01 00:00:00'
+		WHERE CódigoEquipamento = @canoa AND TipoDuração = 'h';
+	--Erro 5, a alteração do Fim do Preço faz que o segundo Preço acabe no terceiro--
 
 	SELECT * FROM dbo.Preço WHERE CódigoEquipamento = @canoa;
 
 ROLLBACK TRAN
-
-/*
-	--Acaba no primerio--
-	INSERT INTO dbo.Preço (CódigoEquipamento, Inicio, Fim, TipoDuração, Valor) VALUES(@canoa, '2016-12-01 00:00:00', '2017-01-05 00:00:00',
-	'h',12.20)
-	--Acaba do primerio--
-
-	--Dentro do segundo--
-	INSERT INTO dbo.Preço (CódigoEquipamento, Inicio, Fim, TipoDuração, Valor) VALUES(@canoa, '2017-09-01 00:01:00', '2017-09-20 00:00:00',
-	'h',12.20)
-	--Dentro do segundo--
-
-	--Começa no terceiro--
-	INSERT INTO dbo.Preço (CódigoEquipamento, Inicio, Fim, TipoDuração, Valor) VALUES(@canoa, '2017-12-20 23:59:00', '2018-01-20 00:00:00',
-	'h',12.20)
-	--Começa no terceiro--
-
-
-
-	BEGIN TRY
-		
-	END TRY
-	BEGIN CATCH
-		EXECUTE usp_GetErrorInfo;  
-	END CATCH
-*/

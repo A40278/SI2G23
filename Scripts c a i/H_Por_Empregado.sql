@@ -31,10 +31,10 @@ BEGIN TRAN
 	--Introduze-se o Preço dos Equipamentos para os Alugueres--
 
 	--Introduze-se os Alugueres--
-	INSERT INTO dbo.Aluguer(TipoDuração, Inicio, Fim, CódigoCliente, NumeroEmpregado) VALUES ('h', DATEADD(hh,-1,@now), DATEADD(hh,7,@now),
+	INSERT INTO dbo.Aluguer(TipoDuração, Inicio, Fim, CódigoCliente, NumeroEmpregado) VALUES ('h', DATEADD(d,5,@now), DATEADD(d,7,@now),
 	@cliente, @empregado)
 
-	INSERT INTO dbo.Aluguer(TipoDuração, Inicio, Fim, CódigoCliente, NumeroEmpregado) VALUES ('h', DATEADD(hh,-5,@now), DATEADD(hh,-2,@now),
+	INSERT INTO dbo.Aluguer(TipoDuração, Inicio, Fim, CódigoCliente, NumeroEmpregado) VALUES ('h', DATEADD(d,-5,@now), DATEADD(d,-1,@now),
 	@cliente, @empregado)
 
 	SET @aluguer2 = @@IDENTITY
@@ -45,28 +45,15 @@ BEGIN TRAN
 	INSERT INTO dbo.EquipamentoAlugado(NumeroSerieAluguer,CódigoEquipamento) VALUES (@aluguer,@gaivota)
 	--Aluga-se os Equipamentos--
 
-	SELECT * FROM EquipamentoAlugado WHERE NumeroSerieAluguer = @aluguer OR NumeroSerieAluguer = @aluguer2
+	SELECT * FROM EquipamentoAlugado WHERE NumeroSerieAluguer = @aluguer
 
-	SELECT * FROM Aluguer WHERE NumeroSerie = @aluguer OR  NumeroSerie = @aluguer2
+	SELECT * FROM Aluguer;
+		
+	--Erro 1, não é possivel remover este Cliente, sendo que participa num Aluguer que já começou--
+	PRINT('Erro 1, não é possivel remover este Empregado, sendo que participa num Aluguer que já começou');
+	DELETE  FROM Empregado WHERE Numero = @empregado
+	PRINT('Erro 1, não é possivel remover este Empregado, sendo que participa num Aluguer que já começou');
+	--Erro 1, não é possivel remover este Empregado, sendo que participa num Aluguer que já começou--
 
-	--É possivel remover este Aluguer--
-	DELETE  FROM Aluguer WHERE NumeroSerie = @aluguer
-	--É possivel remover este Aluguer--
-
-	--Erro 1, não é possivel remover este Aluguer, sendo que já acabou--
-	PRINT('Erro 1, não é possivel remover este Aluguer, sendo que já acabou');
-	DELETE  FROM Aluguer WHERE NumeroSerie = @aluguer2;
-	PRINT('Erro 1, não é possivel remover este Aluguer, sendo que já acabou');
-	--Erro 1, não é possivel remover este Aluguer, sendo que já acabou--
-
-	SELECT * FROM EquipamentoAlugado WHERE NumeroSerieAluguer = @aluguer OR NumeroSerieAluguer = @aluguer2
-
-	SELECT * FROM Aluguer WHERE NumeroSerie = @aluguer OR  NumeroSerie = @aluguer2
-
-	SELECT * FROM Equipamento WHERE Código = @canoa OR Código = @gaivota;
-
-	SELECT * FROM Empregado WHERE Numero = @empregado;
-
-	SELECT * FROM Cliente WHERE Código = @cliente;
-
+	SELECT * FROM Aluguer;
 ROLLBACK TRAN

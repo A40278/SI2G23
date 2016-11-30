@@ -3,20 +3,23 @@ USE Base_Dados_SI2_1617SI_23
 BEGIN TRAN
 	SET NOCOUNT ON;
 	DECLARE @promoção INT, @promoção2 INT;
-	
+	DECLARE @now DATETIME;
+	SET @now = GETDATE();
+
 	--Introdução do Tipo necessario para a Promoção--
 	INSERT INTO Tipo(Nome, Descrição) VALUES ('Canoa', 'canoa simples');
 	INSERT INTO Tipo(Nome, Descrição) VALUES ('Remos', 'remos simples');
 	--Introdução do Tipo necessario para a Promoção--
 
 	--Introdução da Promoção para o Desconto--
-	INSERT INTO dbo.Promoção (Descrição, Inicio, Fim) VALUES ('Desconto Teste', '2016-04-01 00:00:00', '2016-07-31 00:00:00');
+	INSERT INTO dbo.Promoção (Descrição, Inicio, Fim) VALUES ('Desconto Teste', @now, DATEADD(d,5,@now));
 	SET @promoção = @@IDENTITY;
 	--Introdução da Promoção para o Desconto--
 
 	--Torna-se a Promoção num Desconto--
 	INSERT INTO dbo.Desconto(NumeroIdentificadorPromoção,Valor) VALUES (@promoção, 0.32);
-	EXEC @promoção2 = Inserir_Desconto 'Segundo Desconto Teste','2016-04-01 00:00:00', '2016-07-31 00:00:00',0.22;
+	DECLARE @inicio DATETIME = DATEADD(d,-3,@now), @fim DATETIME = DATEADD(d,3,@now);
+	EXEC @promoção2 = Inserir_Desconto 'Segundo Desconto Teste',@inicio , @fim,0.22;
 	--Torna-se a Promoção num Desconto--
 
 	--Erro 1, a Promoção já é um Desconto--
@@ -25,6 +28,7 @@ BEGIN TRAN
 	PRINT('--Erro 1, a Promoção já é um Desconto--');
 	--Erro 1, a Promoção já é um Desconto--
 
+	SELECT * FROM Promoção WHERE NumeroIdentificador = @promoção OR  NumeroIdentificador = @promoção2;
 	SELECT * FROM TempoExtra WHERE NumeroIdentificadorPromoção = @promoção;
 	SELECT * FROM Desconto WHERE NumeroIdentificadorPromoção = @promoção OR NumeroIdentificadorPromoção = @promoção2;
 	
@@ -43,16 +47,14 @@ BEGIN TRAN
 	
 	--Atera o Inicio da Promoção--	
 	UPDATE dbo.Promoção
-	SET Inicio = '2016-05-30 00:00:00'
+	SET Inicio = DATEADD(d,-3,@now)
 	WHERE NumeroIdentificador = @promoção
-	SELECT * FROM Promoção WHERE NumeroIdentificador = @promoção;
 	--Atera o Inicio da Promoção--	
 
 	--Altera o Valor do Desconto--
 	UPDATE dbo.Desconto
-	SET Valor = 0.22
+	SET Valor = 0.25
 	WHERE NumeroIdentificadorPromoção = @promoção
-	SELECT * FROM Desconto WHERE NumeroIdentificadorPromoção = @promoção;
 	--Altera o Valor do Desconto--
 
 	SELECT * FROM Promoção WHERE NumeroIdentificador = @promoção;

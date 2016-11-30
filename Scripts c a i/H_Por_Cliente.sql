@@ -45,28 +45,15 @@ BEGIN TRAN
 	INSERT INTO dbo.EquipamentoAlugado(NumeroSerieAluguer,CódigoEquipamento) VALUES (@aluguer,@gaivota)
 	--Aluga-se os Equipamentos--
 
-	SELECT * FROM EquipamentoAlugado WHERE NumeroSerieAluguer = @aluguer OR NumeroSerieAluguer = @aluguer2
+	SELECT * FROM EquipamentoAlugado WHERE NumeroSerieAluguer = @aluguer
 
-	SELECT * FROM Aluguer WHERE NumeroSerie = @aluguer OR  NumeroSerie = @aluguer2
+	SELECT * FROM Aluguer;
 
-	--É possivel remover este Aluguer--
-	DELETE  FROM Aluguer WHERE NumeroSerie = @aluguer
-	--É possivel remover este Aluguer--
+	--Erro 1, não é possivel remover este Cliente, sendo que participa num Aluguer que já começou--
+	PRINT('Erro 1, não é possivel remover este Cliente, sendo que participa num Aluguer que já começou');
+	DELETE  FROM Cliente WHERE Código = @cliente
+	PRINT('Erro 1, não é possivel remover este Cliente, sendo que participa num Aluguer que já começou');
+	--Erro 1, não é possivel remover este Cliente, sendo que participa num Aluguer que já começou--
 
-	--Erro 1, não é possivel remover este Aluguer, sendo que já acabou--
-	PRINT('Erro 1, não é possivel remover este Aluguer, sendo que já acabou');
-	DELETE  FROM Aluguer WHERE NumeroSerie = @aluguer2;
-	PRINT('Erro 1, não é possivel remover este Aluguer, sendo que já acabou');
-	--Erro 1, não é possivel remover este Aluguer, sendo que já acabou--
-
-	SELECT * FROM EquipamentoAlugado WHERE NumeroSerieAluguer = @aluguer OR NumeroSerieAluguer = @aluguer2
-
-	SELECT * FROM Aluguer WHERE NumeroSerie = @aluguer OR  NumeroSerie = @aluguer2
-
-	SELECT * FROM Equipamento WHERE Código = @canoa OR Código = @gaivota;
-
-	SELECT * FROM Empregado WHERE Numero = @empregado;
-
-	SELECT * FROM Cliente WHERE Código = @cliente;
-
+	SELECT * FROM Aluguer;
 ROLLBACK TRAN

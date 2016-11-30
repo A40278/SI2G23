@@ -18,7 +18,7 @@ AS
 	SELECT @count = COUNT(*) FROM(
 		SELECT * FROM dbo.Preço WHERE TipoDuração = @tipoDuração AND CódigoEquipamento = @codigo)
 	AS P
-	WHERE (P.Inicio<=@inicio AND @inicio<=P.Fim) OR (P.Inicio<=@fim AND @fim<=P.Fim)
+	WHERE (P.Inicio<@inicio AND @inicio<P.Fim) OR (P.Inicio<@fim AND @fim<P.Fim)
 
 	RETURN @count;
 GO
@@ -61,8 +61,8 @@ CREATE PROC Verificar_Equipamento_Alugado_No_Periodo
 AS
 	DECLARE @count INT;
 	SELECT @count = COUNT(*) FROM EquipamentoAlugado WHERE CódigoEquipamento = @codigo AND NumeroSerieAluguer IN
-			(SELECT NumeroSerie FROM Aluguer WHERE (Inicio<=@inicioPeriodo AND Fim>=@inicioPeriodo)
-			OR (Inicio<=@fimPeriodo AND Fim>=@fimPeriodo))
+			(SELECT NumeroSerie FROM Aluguer WHERE (Inicio<@inicioPeriodo AND FimComExtra>@inicioPeriodo)
+			OR (Inicio<@fimPeriodo AND FimComExtra>@fimPeriodo))
 	RETURN @count;
 GO
 
@@ -75,13 +75,15 @@ AS
 
 	IF(@preço IS NULL)
 		RETURN -1;
-	
+
 	DECLARE @blocoTemporal DECIMAL(10,2), @factor DECIMAL(10,2);
 
 	EXEC Factor_Tipo_Duração @tipoDuração, @factor OUTPUT;
 	SELECT @blocoTemporal = CEILING(DATEDIFF(MI,@inicio,@fim) / @factor)
+
 	SET @preço = (@preço*@blocoTemporal);
-	
+GO
+
 GO
 CREATE PROC Equipamento_Alugado_Desconto
 @codigo INT, @inicio DATETIME, @decontoTotal DECIMAL(10,2) OUTPUT
@@ -108,5 +110,13 @@ AS
 	IF(@ret=-1)
 		RETURN -1;
 	EXEC Equipamento_Alugado_Desconto @códigoEquipamento, @inicio, @desconto OUTPUT;
+	SET @preçoAluguer = @preço - (@preço*@desconto);
+GO
+
+GO
+CREATE PROC Calcular_Preço_De_Aluguer_Sem_Desconto
+@códigoEquipamento INT, @tipoDuração VARCHAR(2), @inicio DATETIME, @fim DATETIME,  @desconto DECIMAL(10,2), @preço DECIMAL(10,2) OUTPUT, @preçoAluguer DECIMAL(10,2) OUTPUT
+AS
+	EXEC Equipamento_Alugado_Preço @códigoEquipamento, @tipoDuração, @inicio, @fim, @preço OUTPUT;
 	SET @preçoAluguer = @preço - (@preço*@desconto);
 GO

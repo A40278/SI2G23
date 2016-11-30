@@ -5,6 +5,7 @@ BEGIN TRAN
 
 	DECLARE @cliente INT, @empregado INT, @canoa INT, @gaivota INT, @mota INT, @aluguer INT, @aluguer1 INT, @aluguer2 INT;
 	DECLARE @tempoExtra1 INT, @tempoExtra2 INT, @tempoExtra3 INT, @desconto1 INT, @desconto2 INT, @desconto3 INT , @desconto4 INT;
+	DECLARE @now DATETIME = GETDATE();
 
 	--Instruduzir os Tipos para os Equipamentos e Descontos--
 	INSERT INTO Tipo(Nome, Descrição) VALUES ('Canoa', 'canoa simples');
@@ -37,29 +38,29 @@ BEGIN TRAN
 	--Intruduzir os Preços dos Equipamentos para o Aluguer--
 
 	--Neste é o Primeiro--
-	INSERT INTO dbo.Preço (CódigoEquipamento, Inicio, Fim, TipoDuração, Valor) VALUES(@canoa, '2016-01-01 00:00:00', '2016-08-01 00:00:00',
-	'h',10.15) --10.15 * 9 = 91.35-- 
-	INSERT INTO dbo.Preço (CódigoEquipamento, Inicio, Fim, TipoDuração, Valor) VALUES(@canoa, '2016-08-01 00:01:00', '2016-09-30 00:00:00',
+	INSERT INTO dbo.Preço (CódigoEquipamento, Inicio, Fim, TipoDuração, Valor) VALUES(@canoa,  DATEADD(hh,1,@now), DATEADD(hh,5,@now),
+	'h',10.15) --10.15 * 3 = 30.45-- 
+	INSERT INTO dbo.Preço (CódigoEquipamento, Inicio, Fim, TipoDuração, Valor) VALUES(@canoa, DATEADD(hh,5,@now), DATEADD(hh,6,@now),
 	'h',12.20)
-	INSERT INTO dbo.Preço (CódigoEquipamento, Inicio, Fim, TipoDuração, Valor) VALUES(@canoa, '2016-09-30 00:01:00', '2016-12-31 23:59:00',
+	INSERT INTO dbo.Preço (CódigoEquipamento, Inicio, Fim, TipoDuração, Valor) VALUES(@canoa, DATEADD(hh,6,@now), DATEADD(hh,7,@now),
 	'h',11.50)
 	
 	--Neste é o Segundo--
-	INSERT INTO dbo.Preço (CódigoEquipamento, Inicio, Fim, TipoDuração, Valor) VALUES(@gaivota, '2016-01-01 00:00:00', '2016-03-04 00:00:00',
+	INSERT INTO dbo.Preço (CódigoEquipamento, Inicio, Fim, TipoDuração, Valor) VALUES(@gaivota, DATEADD(hh,1,@now), DATEADD(hh,2,@now),
 	'h',7.80)
-	INSERT INTO dbo.Preço (CódigoEquipamento, Inicio, Fim, TipoDuração, Valor) VALUES(@gaivota, '2016-03-04 00:01:00', '2016-09-30 23:59:00',
-	'h',8.60) --8.60 * 9 = 77.40--
-	INSERT INTO dbo.Preço (CódigoEquipamento, Inicio, Fim, TipoDuração, Valor) VALUES(@gaivota, '2016-10-01 00:00:00', '2016-12-31 23:59:00',
+	INSERT INTO dbo.Preço (CódigoEquipamento, Inicio, Fim, TipoDuração, Valor) VALUES(@gaivota, DATEADD(hh,2,@now), DATEADD(hh,5,@now),
+	'h',8.60) --8.60 * 3 = 25-80--
+	INSERT INTO dbo.Preço (CódigoEquipamento, Inicio, Fim, TipoDuração, Valor) VALUES(@gaivota, DATEADD(hh,5,@now), DATEADD(hh,7,@now),
 	'h',8.20)
 	
 	
 	--Neste é o Terceiro--
-	INSERT INTO dbo.Preço (CódigoEquipamento, Inicio, Fim, TipoDuração, Valor) VALUES(@mota, '2016-01-01 00:00:00', '2016-02-28 23:59:00',
+	INSERT INTO dbo.Preço (CódigoEquipamento, Inicio, Fim, TipoDuração, Valor) VALUES(@mota, DATEADD(hh,1,@now), DATEADD(hh,2,@now),
 	'h',20.50)
-	INSERT INTO dbo.Preço (CódigoEquipamento, Inicio, Fim, TipoDuração, Valor) VALUES(@mota, '2016-03-01 00:00:00', '2016-07-01 00:00:00',
+	INSERT INTO dbo.Preço (CódigoEquipamento, Inicio, Fim, TipoDuração, Valor) VALUES(@mota, DATEADD(hh,2,@now), DATEADD(hh,3,@now),
 	'h',23.00)
-	INSERT INTO dbo.Preço (CódigoEquipamento, Inicio, Fim, TipoDuração, Valor) VALUES(@mota, '2016-07-01 00:01:00', '2016-12-31 23:59:00',
-	'h',22.75)--22.75 * 9 = 204.75--
+	INSERT INTO dbo.Preço (CódigoEquipamento, Inicio, Fim, TipoDuração, Valor) VALUES(@mota, DATEADD(hh,3,@now), DATEADD(hh,7,@now),
+	'h',22.75)--22.75 * 3 = 28.25--
 	--Intruduzir os Preços dos Equipamentos para o Aluguer--
 
 	--Intruduzir os TemposExtras para o Aluguer--
@@ -107,11 +108,11 @@ BEGIN TRAN
 	--Com os descontos--
 
 	--Intruduzir Aluguer--
-	INSERT INTO dbo.Aluguer(TipoDuração, Inicio, Fim, CódigoCliente, NumeroEmpregado) VALUES ('h', '2016-07-08 12:00:00', '2016-07-08 20:10:00',
+	INSERT INTO dbo.Aluguer(TipoDuração, Inicio, Fim, CódigoCliente, NumeroEmpregado) VALUES ('h', DATEADD(hh,4,@now), DATEADD(hh,7,@now),
 	@cliente, @empregado)
-	INSERT INTO dbo.Aluguer(TipoDuração, Inicio, Fim, CódigoCliente, NumeroEmpregado) VALUES ('h', '2017-07-08 12:00:00', '2017-07-08 20:10:00',
+	INSERT INTO dbo.Aluguer(TipoDuração, Inicio, Fim, CódigoCliente, NumeroEmpregado) VALUES ('h', DATEADD(hh,8,@now), DATEADD(hh,10,@now),
 	@cliente, @empregado)
-	INSERT INTO dbo.Aluguer(TipoDuração, Inicio, Fim, CódigoCliente, NumeroEmpregado) VALUES ('h', '2016-07-08 12:00:00', '2016-07-08 20:10:00',
+	INSERT INTO dbo.Aluguer(TipoDuração, Inicio, Fim, CódigoCliente, NumeroEmpregado) VALUES ('h', DATEADD(hh,3,@now), DATEADD(hh,6,@now),
 	@cliente, @empregado)
 	SET @aluguer2 = @@IDENTITY
 	SET @aluguer1 = @aluguer2 - 1
