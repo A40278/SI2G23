@@ -28,6 +28,8 @@ IF DB_ID ('Base_Dados_SI2_1617SI_23') IS NOT NULL
 		DROP PROC Inserir_Desconto;
 	IF OBJECT_ID(N'Inserir_TempoExtra') IS NOT NULL
 		DROP PROC Inserir_TempoExtra;
+	IF OBJECT_ID(N'Calcular_Preço_De_Aluguer_Sem_Desconto') IS NOT NULL
+		DROP PROC Calcular_Preço_De_Aluguer_Sem_Desconto;
 
 	IF OBJECT_ID(N'Version01.Promoção_para_TempoExtra') IS NOT NULL
 		DROP TRIGGER Version01.Promoção_para_TempoExtra;
@@ -55,6 +57,8 @@ IF DB_ID ('Base_Dados_SI2_1617SI_23') IS NOT NULL
 		DROP TRIGGER Alterar_Aluguer;
 	IF OBJECT_ID(N'Remover_EquipamentoAlugado') IS NOT NULL
 		DROP TRIGGER Remover_EquipamentoAlugado;
+	IF OBJECT_ID(N'Remover_Equipamentp') IS NOT NULL
+		DROP TRIGGER Remover_Equipamentp;
 
 	IF OBJECT_ID(N'Version01.Preço') IS NOT NULL
 		DROP TABLE Version01.Preço;
