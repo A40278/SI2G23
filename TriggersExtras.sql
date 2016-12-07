@@ -3,7 +3,7 @@ USE Base_Dados_SI2_1617SI_23
 GO
 --Verifica se Aluguer pode ser alterado, caso poder altera os valores de acordo com o necessario
 CREATE TRIGGER Alterar_Aluguer
-ON dbo.Aluguer
+ON Version01.Aluguer
 INSTEAD OF
 UPDATE
 AS
@@ -15,21 +15,13 @@ AS
 		RETURN
 	END
 
-	--Verifica se Preço e/ou FimComExtra foram alterados, o que não pode aconteçer
-	IF(COLUMNS_UPDATED() & 192) > 0
-		BEGIN
-			--Caso o Preço e/ou FimComExtra foram alterados levante-se um erro e acaba-se o trigger
-			RAISERROR('Não se pode alterar Preço ou FimComExtra',16,1)
-			RETURN
-		END
-
 	DECLARE @codigoC INT, @numeroE INT;
 	--Verifica se só CódigoCliente e/ou NumeroEmpregado foram alterados 
 	IF(COLUMNS_UPDATED() & 255 >=  2 AND COLUMNS_UPDATED() & 255 <= 6)
 		BEGIN
 			--Caso só CódigoCliente e/ou NumeroEmpregado foram alterados, então altera-se esse elementos e acaba-se o Trigger
 			SELECT @codigoC = CódigoCliente, @numeroE = NumeroEmpregado FROM INSERTED;
-			UPDATE Aluguer SET CódigoCliente = @codigoC, NumeroEmpregado = @numeroE WHERE NumeroSerie = (SELECT NumeroSerie FROM DELETED);
+			UPDATE Version01.Aluguer SET CódigoCliente = @codigoC, NumeroEmpregado = @numeroE WHERE NumeroSerie = (SELECT NumeroSerie FROM DELETED);
 			RETURN
 		END
 
@@ -114,7 +106,7 @@ AS
 
 			--Altera-se o valores possivieis, incluindo PreçoOriginal e PreçoFinal, usando os valores calculados no ponto anteriror
 			--usandoa as chaves primarias dos elementos antes da alteração do Aluguer
-			UPDATE EquipamentoAlugado SET PreçoOriginal = @preço, PreçoFinal = @preçoAluguer WHERE CódigoEquipamento = @codigo
+			UPDATE Version01.EquipamentoAlugado SET PreçoOriginal = @preço, PreçoFinal = @preçoAluguer WHERE CódigoEquipamento = @codigo
 				AND NumeroSerieAluguer = @numeroSerie;
 
 			--Incrementa-se @novoPreço pelo o PreçoFinal obtido
@@ -124,7 +116,7 @@ AS
 	DEALLOCATE cursorChange;  
 
 	--ALteta-se os valores possivies com os valores obtidos, usando a chave estrangeira antes da alteração do Aluguer
-	UPDATE Aluguer 
+	UPDATE Version01.Aluguer 
 		SET Preço = @novoPreço, TipoDuração = @tipoDuração, Fim = @novoFim, FimComExtra = @fim, CódigoCliente = @codigoC, NumeroEmpregado = @numeroE
 		WHERE NumeroSerie = @numeroSerie;
 	RETURN;
@@ -133,8 +125,8 @@ GO
 GO
 --Verifica se pode-se remover o EquipamentoAlugado, caso poder remove-se o mesmo e altera-se Aluguer de acordo
 CREATE TRIGGER Remover_EquipamentoAlugado
-ON dbo.EquipamentoAlugado
-INSTEAD OF
+ON Version01.EquipamentoAlugado
+AFTER
 DELETE
 AS
 	DECLARE @fimComExtra DATETIME, @numeroSerie INT;
@@ -146,14 +138,12 @@ AS
 	BEGIN
 		--Caso tal Aluguer já ter acabado, então não se pode remover o EquipamentoAlugado e por isso levanta-se um erro e acaba-se o trigger
 		RAISERROR('O Aluguer já acabou e não pode ser removido um Equipamento no Aluguer',16,1)
+		ROLLBACK
 		RETURN
 	END
 
 	--Caso pode-se remover o EquipamentoAlugado, altera-se o Preço do Aluguer associado ao EquipamentoAlugado pelo PreçoFinal do mesmo
 	UPDATE Version01.Aluguer SET Preço = Preço - (SELECT PreçoFinal FROM DELETED) WHERE NumeroSerie = @numeroSerie;
-
-	--Remove-se o EquipamentoAlugado
-	DELETE EquipamentoAlugado WHERE NumeroSerieAluguer = @numeroSerie AND CódigoEquipamento = (SELECT CódigoEquipamento FROM DELETED)
 GO
 
 GO
@@ -199,8 +189,8 @@ GO
 GO
 --Verifica se um Cliente pode ser removido, caso poder remove-se o Cliente
 CREATE TRIGGER Remover_Cliente
-ON dbo.Cliente
-INSTEAD OF
+ON Version01.Cliente
+AFTER
 DELETE
 AS
 	DECLARE @códigoCliente INT;
@@ -211,18 +201,17 @@ AS
 		BEGIN
 			--Caso exister levanta-se um erro e acaba-se o trigger
 			RAISERROR('O Cliente esta associado a um Aluguer que já acabou, que não pode ser removido, dai Cliente também não pode ser removido',16,1)
+			ROLLBACK
 			RETURN
 		END
 
-	--Caso não exister remove-se o Cliente
-	DELETE FROM dbo.Cliente WHERE Código = @códigoCliente;
 	RETURN;
 GO
 
 GO
 --Verifica se um Empregado pode ser removido, caso poder remove-se o Empregado
 CREATE TRIGGER Remover_Empregado
-ON dbo.Empregado
+ON Version01.Empregado
 INSTEAD OF
 DELETE
 AS
@@ -238,15 +227,15 @@ AS
 		END
 
 	--Caso não exister remove-se o Empregado
-	DELETE FROM dbo.Empregado WHERE Numero = @numero;
+	DELETE FROM Version01.Empregado WHERE Numero = @numero;
 	RETURN;
 GO
 
 GO
 --Verifica se um Equipamento pode ser removido, caso poder remove-se o Equipamento
 CREATE TRIGGER Remover_Equipamento
-ON dbo.Equipamento
-INSTEAD OF
+ON Version01.Equipamento
+AFTER
 DELETE
 AS
 	DECLARE @codigo INT;
@@ -258,10 +247,9 @@ AS
 		BEGIN
 			--Caso exister levanta-se um erro e acaba-se o trigger
 			RAISERROR('O Equipamento esta associado a um Aluguer que já acabou, que não pode ser removido, dai Equipamento também não pode ser removido',16,1)
+			ROLLBACK
 			RETURN
 		END
 
-	--Caso não exister remove-se o Equipamento
-	DELETE FROM dbo.Equipamento WHERE Código = @codigo;
 	RETURN;
 GO

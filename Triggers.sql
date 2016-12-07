@@ -2,7 +2,7 @@ USE Base_Dados_SI2_1617SI_23
 
 GO
 --Garante que não podem existir 2 Preços para o mesmo Equipamento no mesmo perido e mesmo TipoDuração 
-CREATE TRIGGER Verificar_Datas_de_Preço
+CREATE TRIGGER Adicionar_Preço
 ON Version01.Preço
 AFTER
 INSERT, UPDATE
@@ -55,7 +55,7 @@ GO
 --Verifica que pode-se adicionar um Equipamento a lista de EquipamentoAlugados ao Aluguer
 --e caso for possivel obtem o preço de desconto desse alugamento e incrementa o Preço do Alguere pelo preço obtido
 CREATE TRIGGER Adicionar_Equipamento_Aluguer
-ON dbo.EquipamentoAlugado
+ON Version01.EquipamentoAlugado
 INSTEAD OF
 INSERT
 AS
@@ -96,7 +96,7 @@ AS
 		END
 	
 	--Introduz o EquipamentoAlugado basiado nos valores fornecidos pelo utilizador e os valores obtidos durante o trigger
-	INSERT INTO dbo.EquipamentoAlugado (NumeroSerieAluguer, CódigoEquipamento, PreçoOriginal, PreçoFinal, Desconto)
+	INSERT INTO Version01.EquipamentoAlugado (NumeroSerieAluguer, CódigoEquipamento, PreçoOriginal, PreçoFinal, Desconto)
 	VALUES(@numeroSerie, @codigo, @preço, @preçoAluguer, @deconto);
 
 	--Incrementa o Preço do Aluguer pelo o PreçoFinal do EquipamentoAlugado introduzido
@@ -110,8 +110,8 @@ GO
 GO
 --Verifica se pode remover o Aluguer e remove caso podder
 CREATE TRIGGER Remover_Aluguer
-ON dbo.Aluguer
-INSTEAD OF
+ON Version01.Aluguer
+AFTER
 DELETE
 AS
 	--Verifica se o Aluguer já acabou, caso já acabou o Aluguer não pode ser removido
@@ -123,7 +123,7 @@ AS
 	END
 
 	--O Aluguer ainda não acabou , por isso pode ser, e ira ser, removido
-	DELETE FROM dbo.Aluguer WHERE NumeroSerie=(SELECT NumeroSerie FROM DELETED); 
+	DELETE FROM Version01.Aluguer WHERE NumeroSerie=(SELECT NumeroSerie FROM DELETED); 
 
 	RETURN;
 GO
