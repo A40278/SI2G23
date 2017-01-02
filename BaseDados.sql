@@ -28,11 +28,12 @@ CREATE TABLE Version01.Preço(
 	TipoDuração VARCHAR(2),
 	Inicio DATETIME NOT NULL,
 	Fim DATETIME NOT NULL,
+	NumeroSerie INT IDENTITY(1,1) CONSTRAINT PK_Preço PRIMARY KEY,
 	CONSTRAINT Preco_Valor CHECK (Valor>0),
 	CONSTRAINT Tipo_Duração_Valores_Preço CHECK (TipoDuração in ('mh','h','d','s','m')),
 	CONSTRAINT Tempo_Correctos_Preço CHECK (Fim > Inicio),
 	CONSTRAINT FK_Preço_Equipamento FOREIGN KEY (CódigoEquipamento) REFERENCES Version01.Equipamento(Código) ON DELETE CASCADE,
-	CONSTRAINT PK_Preço PRIMARY KEY (Inicio, TipoDuração, CódigoEquipamento)
+	CONSTRAINT UN_Preço UNIQUE (Inicio, TipoDuração, CódigoEquipamento)
 )
 
 CREATE TABLE Version01.Cliente(
@@ -81,7 +82,6 @@ CREATE TABLE Version01.Desconto(
 	CONSTRAINT Valor_Desconto_Factor CHECK(0<Valor and Valor<=1),
 	CONSTRAINT FK_Desconto_Promoção FOREIGN KEY (NumeroIdentificadorPromoção) REFERENCES Version01.Promoção(NumeroIdentificador) ON DELETE CASCADE
 )
-
 CREATE TABLE Version01.TempoExtra(
 	NumeroIdentificadorPromoção INTEGER CONSTRAINT PK_TempoExtra PRIMARY KEY,
 	FracçãoExtra INTEGER NOT NULL,

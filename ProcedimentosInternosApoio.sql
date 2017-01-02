@@ -35,7 +35,7 @@ AS
 		(SELECT NumeroIdentificadorPromoção, FracçãoExtra FROM dbo.TempoExtra WHERE TipoDuração=@tipoDuração)
 	AS TempoExtraDuraçãoCorrecta
 	ON PromoçõesDisponivies.NumeroIdentificador = TempoExtraDuraçãoCorrecta.NumeroIdentificadorPromoção)
-	
+	PRINT(@fraçcoesTempoExtra)
 	RETURN @fraçcoesTempoExtra
 GO
 
@@ -183,3 +183,34 @@ AS
 	INSERT INTO  dbo.TempoExtra (NumeroIdentificadorPromoção, FracçãoExtra, TipoDuração) VALUES (@id, @fracçãoExtra, @tipoDuração)
 	RETURN @id;
 GO
+
+GO
+CREATE PROC Alterar_Desconto
+@descrição VARCHAR(50), @inicio DATETIME = NULL, @fim DATETIME = NULL, @valor DECIMAL(2,2), @numero INT
+AS
+	UPDATE dbo.Desconto SET Valor = @valor WHERE NumeroIdentificadorPromoção = @numero;
+	UPDATE dbo.Promoção SET Descrição = @descrição, Inicio = @inicio, Fim = @fim WHERE NumeroIdentificador = @numero;
+GO
+
+GO
+CREATE PROC Alterar_TempoExtra
+@descrição VARCHAR(50), @inicio DATETIME = NULL, @fim DATETIME = NULL, @extra INTEGER, @tipoDuracao VARCHAR(2), @numero INT
+AS
+	UPDATE dbo.TempoExtra SET TipoDuração = @tipoDuracao, FracçãoExtra = @extra WHERE NumeroIdentificadorPromoção = @numero;
+	UPDATE dbo.Promoção SET Descrição = @descrição, Inicio = @inicio, Fim = @fim WHERE NumeroIdentificador = @numero;
+GO
+
+GO
+CREATE PROC Obter_Aluguers_Datas
+@inicioPeriodo DATETIME, @fimPeriodo DATETIME
+AS
+	SELECT NumeroSerie, TipoDuração, CódigoCliente,CódigoEquipamento FROM 
+	EquipamentoAlugado
+	INNER JOIN
+	(SELECT NumeroSerie, TipoDuração, CódigoCliente FROM Aluguer WHERE 
+		(@inicioPeriodo<=Inicio AND Inicio<=@fimPeriodo)
+		OR (Inicio<=@inicioPeriodo AND FimComExtra>=@fimPeriodo)
+		OR (@inicioPeriodo<=Fim AND FimComExtra<=@fimPeriodo)) AS A
+	ON A.NumeroSerie = EquipamentoAlugado.NumeroSerieAluguer
+GO
+

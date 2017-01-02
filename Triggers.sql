@@ -1,5 +1,7 @@
 USE Base_Dados_SI2_1617SI_23
 
+SELECT * FROM Cliente
+
 GO
 --Garante que não podem existir 2 Preços para o mesmo Equipamento no mesmo perido e mesmo TipoDuração 
 CREATE TRIGGER Adicionar_Preço
@@ -114,16 +116,15 @@ ON Version01.Aluguer
 AFTER
 DELETE
 AS
+
 	--Verifica se o Aluguer já acabou, caso já acabou o Aluguer não pode ser removido
-	IF (GetDate()>(SELECT FimComExtra FROM DELETED))
+	IF EXISTS (SELECT * FROM deleted WHERE FimComExtra<GETDATE())
 	BEGIN
 		--O Aluguer já acabou , por isso não pode ser removido
 		RAISERROR('O aluguer já acabou e não pode ser removido',16,1)
 		RETURN
 	END
-
 	--O Aluguer ainda não acabou , por isso pode ser, e ira ser, removido
-	DELETE FROM Version01.Aluguer WHERE NumeroSerie=(SELECT NumeroSerie FROM DELETED); 
 
 	RETURN;
 GO

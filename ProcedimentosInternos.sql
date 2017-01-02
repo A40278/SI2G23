@@ -49,3 +49,35 @@ AS
 				OR (Inicio<=@inicio AND Fim>=@fim)
 				OR (@inicio<=Fim AND Fim<=@fim)))
 GO
+
+GO
+CREATE PROC Listar_Equipamentos_Disponiveis_Aluguer
+@num INT
+AS
+	DECLARE @begin DATETIME, @end DATETIME, @tipoDuracao VARCHAR(2);
+
+	SELECT @begin = Inicio, @end = FimComExtra, @tipoDuracao = TipoDuração FROM Aluguer WHERE NumeroSerie = @num
+
+	SELECT Código, NomeTipo, Descrição FROM(
+		SELECT * FROM Equipamento WHERE Código NOT IN (
+			SELECT CódigoEquipamento FROM EquipamentoAlugado 
+			INNER JOIN 
+				(SELECT * FROM Aluguer WHERE 
+					(@begin<=Inicio AND Inicio<=@end)
+					OR (Inicio<=@begin AND Fim>=@end)
+					OR (@begin<=Fim AND Fim<=@end)
+					AND NumeroSerie != @num)
+			AS AlugueresEmDatas ON 
+			AlugueresEmDatas.NumeroSerie = EquipamentoAlugado.NumeroSerieAluguer)
+		)
+	AS EquipamentosDisponiviesDatas
+	INNER JOIN
+	(SELECT * FROM Preço WHERE 
+		((@begin<=Inicio AND Inicio<=@end)
+		OR (Inicio<=@begin AND Fim>=@end)
+		OR (@begin<=Fim AND Fim<=@end))
+		AND TipoDuração = @tipoDuracao)
+	AS PreçosDatas
+	ON EquipamentosDisponiviesDatas.Código = PreçosDatas.CódigoEquipamento
+	ORDER BY Código;
+GO

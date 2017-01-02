@@ -1,0 +1,629 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A019F8DC-8062-4226-A26D-19115525A6F8}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ReservationApp</RootNamespace>
+    <AssemblyName>ReservationApp</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AcederClasses\AcederClasse.cs" />
+    <Compile Include="AcederClasses\Aluguer.cs" />
+    <Compile Include="AcederClasses\Cliente.cs" />
+    <Compile Include="AcederClasses\Desconto.cs" />
+    <Compile Include="AcederClasses\Empregado.cs" />
+    <Compile Include="AcederClasses\Equipamentos.cs" />
+    <Compile Include="AcederClasses\Preco.cs" />
+    <Compile Include="AcederClasses\TempoExtra.cs" />
+    <Compile Include="AcederClasses\Tipo.cs" />
+    <Compile Include="AcederForms\AcederForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AcederForms\Alugueres.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AcederForms\Alugueres.Designer.cs">
+      <DependentUpon>Alugueres.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AcederForms\TempoExtras.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AcederForms\TempoExtras.Designer.cs">
+      <DependentUpon>TempoExtras.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AcederForms\Descontos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AcederForms\Descontos.Designer.cs">
+      <DependentUpon>Descontos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AcederForms\Empregados.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AcederForms\Empregados.Designer.cs">
+      <DependentUpon>Empregados.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AcederForms\Clientes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AcederForms\Clientes.Designer.cs">
+      <DependentUpon>Clientes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AcederForms\Equipamentos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AcederForms\Equipamentos.Designer.cs">
+      <DependentUpon>Equipamentos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AcederForms\Precos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AcederForms\Precos.Designer.cs">
+      <DependentUpon>Precos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AcederForms\Tipos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AcederForms\Tipos.Designer.cs">
+      <DependentUpon>Tipos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AlterarForms\AlterarForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AlterarForms\Alugueres.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AlterarForms\Alugueres.Designer.cs">
+      <DependentUpon>Alugueres.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AlterarForms\Clientes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AlterarForms\Clientes.Designer.cs">
+      <DependentUpon>Clientes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AlterarForms\Descontos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AlterarForms\Descontos.Designer.cs">
+      <DependentUpon>Descontos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AlterarForms\Empregados.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AlterarForms\Empregados.Designer.cs">
+      <DependentUpon>Empregados.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AlterarForms\Equipamentos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AlterarForms\Equipamentos.Designer.cs">
+      <DependentUpon>Equipamentos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AlterarForms\Precos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AlterarForms\Precos.Designer.cs">
+      <DependentUpon>Precos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AlterarForms\TemposExtras.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AlterarForms\TemposExtras.Designer.cs">
+      <DependentUpon>TemposExtras.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AlterarForms\Tipos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AlterarForms\Tipos.Designer.cs">
+      <DependentUpon>Tipos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Aluguer.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AlugueresDatas_Result.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Cliente.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataNTipo.cs" />
+    <Compile Include="DBModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DBModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DBModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Desconto.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Dispotivos Acesso\ADO\AdoAluguer.cs" />
+    <Compile Include="Dispotivos Acesso\ADO\AdoClasses.cs" />
+    <Compile Include="Dispotivos Acesso\ADO\AdoCliente.cs" />
+    <Compile Include="Dispotivos Acesso\ADO\AdoDesconto.cs" />
+    <Compile Include="Dispotivos Acesso\ADO\AdoEmpregado.cs" />
+    <Compile Include="Dispotivos Acesso\ADO\AdoEquipamento.cs" />
+    <Compile Include="Dispotivos Acesso\ADO\AdoTempoExtra.cs" />
+    <Compile Include="Dispotivos Acesso\ADO\AdoTipo.cs" />
+    <Compile Include="Dispotivos Acesso\ADO\AdoPreco.cs" />
+    <Compile Include="Dispotivos Acesso\Dispositivo.cs" />
+    <Compile Include="Dispotivos Acesso\EntityFramework\EFAluguer.cs" />
+    <Compile Include="Dispotivos Acesso\EntityFramework\EFClasses.cs" />
+    <Compile Include="Dispotivos Acesso\EntityFramework\EFCliente.cs" />
+    <Compile Include="Dispotivos Acesso\EntityFramework\EFDesconto.cs" />
+    <Compile Include="Dispotivos Acesso\EntityFramework\EFEmpregado.cs" />
+    <Compile Include="Dispotivos Acesso\EntityFramework\EFEquipamento.cs" />
+    <Compile Include="Dispotivos Acesso\EntityFramework\EFPreco.cs" />
+    <Compile Include="Dispotivos Acesso\EntityFramework\EFTempoExtra.cs" />
+    <Compile Include="Dispotivos Acesso\EntityFramework\EFTipo.cs" />
+    <Compile Include="Empregado.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Equipamento.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EquipamentoAlugado.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ForForms.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="IntroduzirForms\DatasSemTipo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="IntroduzirForms\DatasSemTipo.Designer.cs">
+      <DependentUpon>DatasSemTipo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IntroduzirForms\DatasComTipo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="IntroduzirForms\DatasComTipo.Designer.cs">
+      <DependentUpon>DatasComTipo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IntroduzirForms\AlugueresClientes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="IntroduzirForms\AlugueresClientes.Designer.cs">
+      <DependentUpon>AlugueresClientes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IntroduzirForms\Clientes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="IntroduzirForms\Clientes.Designer.cs">
+      <DependentUpon>Clientes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IntroduzirForms\IntroduzirForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="IntroduzirForms\TempoExtras.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="IntroduzirForms\TempoExtras.Designer.cs">
+      <DependentUpon>TempoExtras.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IntroduzirForms\Empregados.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="IntroduzirForms\Empregados.Designer.cs">
+      <DependentUpon>Empregados.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IntroduzirForms\Equipamentos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="IntroduzirForms\Equipamentos.Designer.cs">
+      <DependentUpon>Equipamentos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IntroduzirForms\Precos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="IntroduzirForms\Precos.Designer.cs">
+      <DependentUpon>Precos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IntroduzirForms\Tipos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="IntroduzirForms\Tipos.Designer.cs">
+      <DependentUpon>Tipos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Listar_Equipamentos_Disponiveis_Aluguer_Result.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Listar_Equipamentos_Disponiveis_Periodo_Tipo_Result.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Listar_Equipamentos_Disponiveis_Ultima_Semana_Result.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Obter_Aluguers_Datas_Result.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Preço.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Promoção.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RemoverForms\Alugueres.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RemoverForms\Alugueres.Designer.cs">
+      <DependentUpon>Alugueres.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RemoverForms\Clientes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RemoverForms\Clientes.Designer.cs">
+      <DependentUpon>Clientes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RemoverForms\Descontos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RemoverForms\Descontos.Designer.cs">
+      <DependentUpon>Descontos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RemoverForms\RemoverForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RemoverForms\TemposExtras.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RemoverForms\TemposExtras.Designer.cs">
+      <DependentUpon>TemposExtras.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RemoverForms\Tipos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RemoverForms\Tipos.Designer.cs">
+      <DependentUpon>Tipos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RemoverForms\Empregados.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RemoverForms\Empregados.Designer.cs">
+      <DependentUpon>Empregados.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RemoverForms\Equipamentos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RemoverForms\Equipamentos.Designer.cs">
+      <DependentUpon>Equipamentos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RemoverForms\Precos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RemoverForms\Precos.Designer.cs">
+      <DependentUpon>Precos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IntroduzirForms\Alugueres.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="IntroduzirForms\Alugueres.Designer.cs">
+      <DependentUpon>Alugueres.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TempoExtra.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Tipo.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VerificarForms\Alugueres.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VerificarForms\Alugueres.Designer.cs">
+      <DependentUpon>Alugueres.cs</DependentUpon>
+    </Compile>
+    <Compile Include="VerificarForms\VerificarForms.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VerificarForms\Clientes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VerificarForms\Clientes.Designer.cs">
+      <DependentUpon>Clientes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="VerificarForms\TempoExtras.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VerificarForms\TempoExtras.Designer.cs">
+      <DependentUpon>TempoExtras.cs</DependentUpon>
+    </Compile>
+    <Compile Include="VerificarForms\Descontos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VerificarForms\Descontos.Designer.cs">
+      <DependentUpon>Descontos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="VerificarForms\Equipamentos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VerificarForms\Equipamentos.Designer.cs">
+      <DependentUpon>Equipamentos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="VerificarForms\Preços.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VerificarForms\Preços.Designer.cs">
+      <DependentUpon>Preços.cs</DependentUpon>
+    </Compile>
+    <Compile Include="VerificarForms\Empregados.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VerificarForms\Empregados.Designer.cs">
+      <DependentUpon>Empregados.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IntroduzirForms\Descontos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="IntroduzirForms\Descontos.Designer.cs">
+      <DependentUpon>Descontos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="VerificarForms\Tipos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VerificarForms\Tipos.Designer.cs">
+      <DependentUpon>Tipos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="XMLFileWriter.cs" />
+    <EmbeddedResource Include="AcederForms\Alugueres.resx">
+      <DependentUpon>Alugueres.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AcederForms\TempoExtras.resx">
+      <DependentUpon>TempoExtras.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AcederForms\Descontos.resx">
+      <DependentUpon>Descontos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AcederForms\Empregados.resx">
+      <DependentUpon>Empregados.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AcederForms\Clientes.resx">
+      <DependentUpon>Clientes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AcederForms\Equipamentos.resx">
+      <DependentUpon>Equipamentos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AcederForms\Precos.resx">
+      <DependentUpon>Precos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AcederForms\Tipos.resx">
+      <DependentUpon>Tipos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AlterarForms\Alugueres.resx">
+      <DependentUpon>Alugueres.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AlterarForms\Clientes.resx">
+      <DependentUpon>Clientes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AlterarForms\Descontos.resx">
+      <DependentUpon>Descontos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AlterarForms\Empregados.resx">
+      <DependentUpon>Empregados.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AlterarForms\Equipamentos.resx">
+      <DependentUpon>Equipamentos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AlterarForms\Precos.resx">
+      <DependentUpon>Precos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AlterarForms\TemposExtras.resx">
+      <DependentUpon>TemposExtras.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AlterarForms\Tipos.resx">
+      <DependentUpon>Tipos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IntroduzirForms\DatasSemTipo.resx">
+      <DependentUpon>DatasSemTipo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IntroduzirForms\DatasComTipo.resx">
+      <DependentUpon>DatasComTipo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IntroduzirForms\AlugueresClientes.resx">
+      <DependentUpon>AlugueresClientes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IntroduzirForms\Clientes.resx">
+      <DependentUpon>Clientes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IntroduzirForms\TempoExtras.resx">
+      <DependentUpon>TempoExtras.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IntroduzirForms\Empregados.resx">
+      <DependentUpon>Empregados.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IntroduzirForms\Equipamentos.resx">
+      <DependentUpon>Equipamentos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IntroduzirForms\Precos.resx">
+      <DependentUpon>Precos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IntroduzirForms\Tipos.resx">
+      <DependentUpon>Tipos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="RemoverForms\Alugueres.resx">
+      <DependentUpon>Alugueres.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RemoverForms\Clientes.resx">
+      <DependentUpon>Clientes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RemoverForms\Descontos.resx">
+      <DependentUpon>Descontos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RemoverForms\RemoverForm.resx">
+      <DependentUpon>RemoverForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RemoverForms\TemposExtras.resx">
+      <DependentUpon>TemposExtras.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RemoverForms\Tipos.resx">
+      <DependentUpon>Tipos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RemoverForms\Empregados.resx">
+      <DependentUpon>Empregados.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RemoverForms\Equipamentos.resx">
+      <DependentUpon>Equipamentos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RemoverForms\Precos.resx">
+      <DependentUpon>Precos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IntroduzirForms\Alugueres.resx">
+      <DependentUpon>Alugueres.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VerificarForms\Alugueres.resx">
+      <DependentUpon>Alugueres.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VerificarForms\Clientes.resx">
+      <DependentUpon>Clientes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VerificarForms\TempoExtras.resx">
+      <DependentUpon>TempoExtras.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VerificarForms\Descontos.resx">
+      <DependentUpon>Descontos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VerificarForms\Equipamentos.resx">
+      <DependentUpon>Equipamentos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VerificarForms\Preços.resx">
+      <DependentUpon>Preços.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VerificarForms\Empregados.resx">
+      <DependentUpon>Empregados.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IntroduzirForms\Descontos.resx">
+      <DependentUpon>Descontos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VerificarForms\Tipos.resx">
+      <DependentUpon>Tipos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VerificarForms\VerificarForms.resx">
+      <DependentUpon>VerificarForms.cs</DependentUpon>
+    </EmbeddedResource>
+    <EntityDeploy Include="DBModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>DBModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="DBModel.edmx.diagram">
+      <DependentUpon>DBModel.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <None Include="schema.xsd">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="DBModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>DBModel.edmx</DependentUpon>
+      <LastGenOutput>DBModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="DBModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>DBModel.edmx</DependentUpon>
+      <LastGenOutput>DBModel.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

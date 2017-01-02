@@ -1,5 +1,6 @@
 USE Base_Dados_SI2_1617SI_23
 
+
 GO
 --Verifica se Aluguer pode ser alterado, caso poder altera os valores de acordo com o necessario
 CREATE TRIGGER Alterar_Aluguer
@@ -41,6 +42,7 @@ AS
 
 			--Obtém o valor do novo FimComExtra juntando ao novo Fim a diferença obtida no ponto anterior 
 			SET @fim = DATEADD(mi,@dateDiff,@novoFim);   
+			PRINT(@fim)
 		END
 
 	DECLARE @tipoDuração VARCHAR(2), @inicio DATETIME;
@@ -115,13 +117,35 @@ AS
 		END
 	DEALLOCATE cursorChange;  
 
+	PRINT(@fim)
 	--ALteta-se os valores possivies com os valores obtidos, usando a chave estrangeira antes da alteração do Aluguer
 	UPDATE Version01.Aluguer 
-		SET Preço = @novoPreço, TipoDuração = @tipoDuração, Fim = @novoFim, FimComExtra = @fim, CódigoCliente = @codigoC, NumeroEmpregado = @numeroE
+		SET Preço = @novoPreço, Inicio = @inicio, TipoDuração = @tipoDuração, Fim = @novoFim, FimComExtra = @fim, CódigoCliente = @codigoC, NumeroEmpregado = @numeroE
 		WHERE NumeroSerie = @numeroSerie;
 	RETURN;
 GO
 
+/*
+
+DROP TRIGGER Version01.Alterar_Aluguer
+GO
+CREATE TRIGGER Alterar_Aluguer
+ON Version01.Aluguer
+AFTER
+UPDATE
+AS
+	IF(UPDATE(FIM))
+		BEGIN
+			DECLARE @fimOr DATETIME, @fimExOr DATETIME, @fimNvo DATETIME, @fimExNvo DATETIME, @ns INT;
+			SELECT @fimExOr = FimComExtra, @fimOr = Fim FROM DELETED;
+			SELECT @fimNvo = Fim, @ns = NumeroSerie FROM INSERTED;
+			DECLARE @dateDiff INT = DATEDIFF(mi,@fimOr,@fimExOr);
+			UPDATE dbo.Aluguer SET FimComExtra = @fimExNvo WHERE NumeroSerie = @ns
+		END
+		
+	RETURN
+GO
+*/
 GO
 --Verifica se pode-se remover o EquipamentoAlugado, caso poder remove-se o mesmo e altera-se Aluguer de acordo
 CREATE TRIGGER Remover_EquipamentoAlugado
@@ -190,7 +214,7 @@ GO
 --Verifica se um Cliente pode ser removido, caso poder remove-se o Cliente
 CREATE TRIGGER Remover_Cliente
 ON Version01.Cliente
-AFTER
+INSTEAD OF
 DELETE
 AS
 	DECLARE @códigoCliente INT;
@@ -201,10 +225,9 @@ AS
 		BEGIN
 			--Caso exister levanta-se um erro e acaba-se o trigger
 			RAISERROR('O Cliente esta associado a um Aluguer que já acabou, que não pode ser removido, dai Cliente também não pode ser removido',16,1)
-			ROLLBACK
 			RETURN
 		END
-
+	DELETE FROM Version01.Cliente WHERE Código = @códigoCliente;
 	RETURN;
 GO
 
@@ -219,7 +242,7 @@ AS
 	SELECT @numero = Numero FROM DELETED;
 
 	--Verifca se existe um Aluguer associado ao Empregado que se quer remover que já tenha acabado
-	IF EXISTS(SELECT * FROM dbo.Aluguer WHERE CódigoCliente = @numero AND FimComExtra<GetDate())
+	IF EXISTS(SELECT * FROM dbo.Aluguer WHERE NumeroEmpregado = @numero AND FimComExtra<GetDate())
 		BEGIN
 			--Caso exister levanta-se um erro e acaba-se o trigger
 			RAISERROR('O Empregado esta associado a um Aluguer que já acabou, que não pode ser removido, dai Empregado também não pode ser removido',16,1)

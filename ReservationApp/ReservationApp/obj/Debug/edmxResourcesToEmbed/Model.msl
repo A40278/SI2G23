@@ -1,0 +1,152 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="DBModel">
+    <EntitySetMapping Name="Aluguers">
+      <EntityTypeMapping TypeName="Model.Aluguer">
+        <MappingFragment StoreEntitySet="Aluguer">
+          <ScalarProperty Name="NumeroSerie" ColumnName="NumeroSerie" />
+          <ScalarProperty Name="CódigoCliente" ColumnName="CódigoCliente" />
+          <ScalarProperty Name="NumeroEmpregado" ColumnName="NumeroEmpregado" />
+          <ScalarProperty Name="TipoDuração" ColumnName="TipoDuração" />
+          <ScalarProperty Name="Inicio" ColumnName="Inicio" />
+          <ScalarProperty Name="Fim" ColumnName="Fim" />
+          <ScalarProperty Name="FimComExtra" ColumnName="FimComExtra" />
+          <ScalarProperty Name="Preço" ColumnName="Preço" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Clientes">
+      <EntityTypeMapping TypeName="Model.Cliente">
+        <MappingFragment StoreEntitySet="Cliente">
+          <ScalarProperty Name="Código" ColumnName="Código" />
+          <ScalarProperty Name="Nome" ColumnName="Nome" />
+          <ScalarProperty Name="NumeroFiscal" ColumnName="NumeroFiscal" />
+          <ScalarProperty Name="Morada" ColumnName="Morada" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Descontoes">
+      <EntityTypeMapping TypeName="Model.Desconto">
+        <MappingFragment StoreEntitySet="Desconto">
+          <ScalarProperty Name="NumeroIdentificadorPromoção" ColumnName="NumeroIdentificadorPromoção" />
+          <ScalarProperty Name="Valor" ColumnName="Valor" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Empregadoes">
+      <EntityTypeMapping TypeName="Model.Empregado">
+        <MappingFragment StoreEntitySet="Empregado">
+          <ScalarProperty Name="Nome" ColumnName="Nome" />
+          <ScalarProperty Name="Numero" ColumnName="Numero" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Equipamentoes">
+      <EntityTypeMapping TypeName="Model.Equipamento">
+        <MappingFragment StoreEntitySet="Equipamento">
+          <ScalarProperty Name="Código" ColumnName="Código" />
+          <ScalarProperty Name="NomeTipo" ColumnName="NomeTipo" />
+          <ScalarProperty Name="Descrição" ColumnName="Descrição" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EquipamentoAlugadoes">
+      <EntityTypeMapping TypeName="Model.EquipamentoAlugado">
+        <MappingFragment StoreEntitySet="EquipamentoAlugado">
+          <ScalarProperty Name="NumeroSerieAluguer" ColumnName="NumeroSerieAluguer" />
+          <ScalarProperty Name="CódigoEquipamento" ColumnName="CódigoEquipamento" />
+          <ScalarProperty Name="PreçoOriginal" ColumnName="PreçoOriginal" />
+          <ScalarProperty Name="Desconto" ColumnName="Desconto" />
+          <ScalarProperty Name="PreçoFinal" ColumnName="PreçoFinal" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Preço">
+      <EntityTypeMapping TypeName="Model.Preço">
+        <MappingFragment StoreEntitySet="Preço">
+          <ScalarProperty Name="CódigoEquipamento" ColumnName="CódigoEquipamento" />
+          <ScalarProperty Name="Valor" ColumnName="Valor" />
+          <ScalarProperty Name="TipoDuração" ColumnName="TipoDuração" />
+          <ScalarProperty Name="Inicio" ColumnName="Inicio" />
+          <ScalarProperty Name="Fim" ColumnName="Fim" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Promoção">
+      <EntityTypeMapping TypeName="Model.Promoção">
+        <MappingFragment StoreEntitySet="Promoção">
+          <ScalarProperty Name="NumeroIdentificador" ColumnName="NumeroIdentificador" />
+          <ScalarProperty Name="Descrição" ColumnName="Descrição" />
+          <ScalarProperty Name="Inicio" ColumnName="Inicio" />
+          <ScalarProperty Name="Fim" ColumnName="Fim" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TempoExtras">
+      <EntityTypeMapping TypeName="Model.TempoExtra">
+        <MappingFragment StoreEntitySet="TempoExtra">
+          <ScalarProperty Name="NumeroIdentificadorPromoção" ColumnName="NumeroIdentificadorPromoção" />
+          <ScalarProperty Name="FracçãoExtra" ColumnName="FracçãoExtra" />
+          <ScalarProperty Name="TipoDuração" ColumnName="TipoDuração" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tipoes">
+      <EntityTypeMapping TypeName="Model.Tipo">
+        <MappingFragment StoreEntitySet="Tipo">
+          <ScalarProperty Name="Nome" ColumnName="Nome" />
+          <ScalarProperty Name="Descrição" ColumnName="Descrição" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="Tipo_Desconto" TypeName="Model.Tipo_Desconto" StoreEntitySet="Tipo_Desconto">
+      <EndProperty Name="Desconto">
+        <ScalarProperty Name="NumeroIdentificadorPromoção" ColumnName="NumeroIdentificadorDesconto" />
+      </EndProperty>
+      <EndProperty Name="Tipo">
+        <ScalarProperty Name="Nome" ColumnName="NomeTipo" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <FunctionImportMapping FunctionImportName="Calcular_Preço_De_Aluguer" FunctionName="Model.Store.Calcular_Preço_De_Aluguer" />
+    <FunctionImportMapping FunctionImportName="Calcular_Preço_De_Aluguer_Sem_Desconto" FunctionName="Model.Store.Calcular_Preço_De_Aluguer_Sem_Desconto" />
+    <FunctionImportMapping FunctionImportName="Equipamento_Alugado_Desconto" FunctionName="Model.Store.Equipamento_Alugado_Desconto" />
+    <FunctionImportMapping FunctionImportName="Equipamento_Alugado_Preço" FunctionName="Model.Store.Equipamento_Alugado_Preço" />
+    <FunctionImportMapping FunctionImportName="Factor_Tipo_Duração" FunctionName="Model.Store.Factor_Tipo_Duração" />
+    <FunctionImportMapping FunctionImportName="Fracoes_Tempo_Extra" FunctionName="Model.Store.Fracoes_Tempo_Extra" />
+    <FunctionImportMapping FunctionImportName="Inserir_Aluguer_e_Cliente" FunctionName="Model.Store.Inserir_Aluguer_e_Cliente" />
+    <FunctionImportMapping FunctionImportName="Inserir_Desconto" FunctionName="Model.Store.Inserir_Desconto" />
+    <FunctionImportMapping FunctionImportName="Inserir_TempoExtra" FunctionName="Model.Store.Inserir_TempoExtra" />
+    <FunctionImportMapping FunctionImportName="Listar_Equipamentos_Disponiveis_Periodo_Tipo" FunctionName="Model.Store.Listar_Equipamentos_Disponiveis_Periodo_Tipo">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="Model.Listar_Equipamentos_Disponiveis_Periodo_Tipo_Result">
+          <ScalarProperty Name="Código" ColumnName="Código" />
+          <ScalarProperty Name="NomeTipo" ColumnName="NomeTipo" />
+          <ScalarProperty Name="Descrição" ColumnName="Descrição" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Listar_Equipamentos_Disponiveis_Ultima_Semana" FunctionName="Model.Store.Listar_Equipamentos_Disponiveis_Ultima_Semana">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="Model.Listar_Equipamentos_Disponiveis_Ultima_Semana_Result">
+          <ScalarProperty Name="Código" ColumnName="Código" />
+          <ScalarProperty Name="NomeTipo" ColumnName="NomeTipo" />
+          <ScalarProperty Name="Descrição" ColumnName="Descrição" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Numero_de_Preços_No_Periodo" FunctionName="Model.Store.Numero_de_Preços_No_Periodo" />
+    <FunctionImportMapping FunctionImportName="Verificar_Equipamento_Alugado_No_Periodo" FunctionName="Model.Store.Verificar_Equipamento_Alugado_No_Periodo" />
+    <FunctionImportMapping FunctionImportName="Alterar_Desconto" FunctionName="Model.Store.Alterar_Desconto" />
+    <FunctionImportMapping FunctionImportName="Alterar_TempoExtra" FunctionName="Model.Store.Alterar_TempoExtra" />
+    <FunctionImportMapping FunctionImportName="Inserir_Desconto_Com_Tipo" FunctionName="Model.Store.Inserir_Desconto_Com_Tipo" />
+    <FunctionImportMapping FunctionImportName="Listar_Equipamentos_Disponiveis_Aluguer" FunctionName="Model.Store.Listar_Equipamentos_Disponiveis_Aluguer">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="Model.Listar_Equipamentos_Disponiveis_Aluguer_Result">
+          <ScalarProperty Name="Código" ColumnName="Código" />
+          <ScalarProperty Name="NomeTipo" ColumnName="NomeTipo" />
+          <ScalarProperty Name="Descrição" ColumnName="Descrição" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+  </EntityContainerMapping>
+</Mapping>
